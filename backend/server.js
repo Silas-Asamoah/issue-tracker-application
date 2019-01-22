@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
-import Issue from './models/issue'
+import Issue from './models/Issue'
 
 
 
@@ -88,7 +88,7 @@ router.route('/issues/delete/:id').get((req, res) => {
         if (err)
             res.json(err);
         else
-            res.json('Remove successful');
+            res.json('Removed successfully');
     })
 })
 
