@@ -4,8 +4,6 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 import Issue from './models/issue'
-import issue from './models/issue';
-import { runInNewContext } from 'vm';
 
 
 
@@ -28,7 +26,7 @@ connection.once('open', () => {
 //Attaching a middleware which is the default router
 //Configure the router with end points to be exposed to the API
 
-//1st EndPoint
+//1st EndPoint for getting to the database
 router.route('/issues').get((req, res) => {
     Issue.find((err, issues) => {
         if (err)
@@ -39,7 +37,7 @@ router.route('/issues').get((req, res) => {
 
 });
 
-//2nd Endpoint
+//2nd Endpoint to retrive an issue and read by id
 router.route('/issues/:id').get((req, res) => {
     Issue.findById(req.params.id, (err, issue) =>{
         if (err)
@@ -67,7 +65,7 @@ router.route('issues/update/:id').post((req, res) => {
     Issue.findById(req.params.id, (err, issue) => {
         if (!issue)
             return next(new Error('Could not load document'));
-        else
+        else {
             issue.title = req.body.title;
             issue.responsible = req.body.responsible;
             issue.description = req.body.description;
@@ -79,8 +77,20 @@ router.route('issues/update/:id').post((req, res) => {
             }).catch(err => {
                 res.status(400).send('Update failed');
             });
+        }
     });
 });
+
+
+//5th endpoint by deleting issues per id
+router.route('/issues/delete/:id').get((req, res) => {
+    Issue.findByIdAndRemove({_id: req.params.id}, (err, issue) => {
+        if (err)
+            res.json(err);
+        else
+            res.json('Remove successful');
+    })
+})
 
 app.use('/', router);
 
