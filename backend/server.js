@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
-import Issue from './models/Issue'
+import Issue from './models/issue'
 
 
 
@@ -18,7 +18,7 @@ mongoose.connect('mongodb://localhost:27017/issues');
 const connect = mongoose.connection;
 
 //Database Event Listener
-connection.once('open', () => {
+connect.once('open', () => {
     console.log('MongoDB database connection established successfully!');
 });
 
@@ -94,4 +94,4 @@ router.route('/issues/delete/:id').get((req, res) => {
 
 app.use('/', router);
 
-app.listen(4200, () => console.log("Express server running on port 4000"));
+app.listen(4000, () => console.log("Express server running on port 4000"));
