@@ -3,6 +3,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
+import Issue from './models/issue'
+
 
 
 const app = express();
@@ -22,7 +24,16 @@ connection.once('open', () => {
 
 
 //Attaching a middleware which is the default router
-//Configure the router with end poiunts to be exposed to the API
+//Configure the router with end points to be exposed to the API
+router.route('/issues').get((req, res) => {
+    Issue.find((err, issues) => {
+        if (err)
+            console.log(err);
+        else
+            res.json(issues)
+    });
+
+});
 
 app.use('/', router);
 
