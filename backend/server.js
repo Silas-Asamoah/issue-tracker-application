@@ -18,7 +18,11 @@ const connect = mongoose.connection;
 //Database Event Listener
 connection.once('open', () => {
     console.log('MongoDB database connection established successfully!');
-})
+});
+
+
+//Attaching a middleware which is the default router
+//Configure the router with end poiunts to be exposed to the API
 
 app.use('/', router);
 
